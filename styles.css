@@ -1,0 +1,206 @@
+:root {
+  --bg: #0f172a;
+  --surface: #111827;
+  --text: #e5e7eb;
+  --muted: #1f2937;
+  --border: #374151;
+  --accent: #4f46e5;
+  --accent-contrast: #ffffff;
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background: radial-gradient(1200px 800px at 10% -10%, #1f2937 0%, transparent 60%),
+              radial-gradient(1000px 700px at 110% 10%, #0b1020 0%, transparent 50%),
+              var(--bg);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 260px 1fr;
+  grid-template-areas:
+    "header header"
+    "aside  main";
+  min-height: 100dvh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+header {
+  grid-area: header;
+  background: linear-gradient(180deg, rgba(31, 41, 55, 0.6), rgba(17, 24, 39, 0.6));
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 1.5rem;
+  backdrop-filter: blur(6px);
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: 0.2px;
+}
+
+aside.left-side {
+  grid-area: aside;
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.6));
+  border-right: 1px solid var(--border);
+  padding: 1rem;
+  overflow: auto;
+}
+
+main.right-side {
+  grid-area: main;
+  padding: 1.25rem;
+  overflow: auto;
+}
+
+.nav-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-bar button {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease, transform 80ms ease;
+}
+
+.nav-bar button:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: #4b5563;
+}
+
+.nav-bar button:active { transform: translateY(1px); }
+
+.nav-bar button:focus-visible,
+.for-button button:focus-visible,
+input:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent), white 15%);
+  outline-offset: 2px;
+}
+
+.renderProjects,
+.editing-project {
+  background: linear-gradient(180deg, rgba(31, 41, 55, 0.3), rgba(31, 41, 55, 0.15));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  min-height: 220px;
+  box-shadow: var(--shadow);
+}
+
+.renderProjects + .editing-project { margin-top: 1rem; }
+
+.modal[hidden],
+.hidden { display: none !important; }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+}
+
+.form-wrapper {
+  width: min(92vw, 520px);
+  background: radial-gradient(600px 300px at -10% -10%, rgba(79, 70, 229, 0.15) 0%, transparent 60%),
+              radial-gradient(600px 300px at 110% 0%, rgba(14, 165, 233, 0.12) 0%, transparent 50%),
+              var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.25rem 1.25rem 1rem;
+  box-shadow: var(--shadow);
+}
+
+#projectForm h2 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.25rem;
+}
+
+label[for="title"] {
+  display: block;
+  margin: 0.5rem 0 0.35rem 0;
+  font-size: 0.95rem;
+  color: #cbd5e1;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+}
+
+input[type="text"]::placeholder { color: #9ca3af; }
+
+input[type="text"]:focus { border-color: color-mix(in srgb, var(--accent), white 20%); }
+
+.for-button {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.for-button .cancel,
+.for-button .ok {
+  appearance: none;
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease, transform 80ms ease;
+}
+
+.for-button .cancel:hover { background: rgba(255, 255, 255, 0.06); }
+
+.for-button .ok {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border-color: color-mix(in srgb, var(--accent), black 10%);
+}
+
+.for-button .ok:hover {
+  background: color-mix(in srgb, var(--accent), black 6%);
+}
+
+@media (max-width: 800px) {
+  body {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "aside"
+      "main";
+  }
+
+  aside.left-side { padding: 0.75rem 0.75rem 0.5rem; }
+
+  .nav-bar { flex-direction: row; flex-wrap: wrap; gap: 0.5rem; }
+
+  .nav-bar button { flex: 1 1 30%; text-align: center; }
+}

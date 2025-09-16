@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do Lists</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1 class="title">My Dashboard</h1>
+    </header>
+
+    <aside class="left-side">
+        <nav class="nav-bar" aria-label="Primary">
+            <button type="button" class="create">Create Project</button>
+            <button type="button" class="projects">Projects</button>
+            <button type="button" class="archived">Archived</button>
+        </nav>
+    </aside>
+
+    <main class="right-side" id="content">
+        <!-- for creating project form -->
+        <div class="modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle" hidden>
+            <div class="form-wrapper">
+                <form action="" method="post" id="projectForm">
+                    <h2 id="projectModalTitle">Create Project</h2>
+                    <label for="title">Project title</label>
+                    <input type="text" name="title" id="title" placeholder="e.g., Study Plan" autocomplete="off" required>
+                    <div class="for-button">
+                        <button type="button" class="cancel">Cancel</button>
+                        <button type="submit" class="ok">Ok</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--For Rendering all Projects-->
+        <div class="renderProjects" hidden></div>
+
+        <!--For Rendering all archived Projects-->
+        <div class="renderProjects" hidden></div>
+
+        <!--For Editing project-->
+        <div class="editing-project" hidden></div>
+    </main>
+<noscript>JavaScript is required for full functionality.</noscript>
+<script type="module" src="script.js"></script>
+</body>
+</html>
