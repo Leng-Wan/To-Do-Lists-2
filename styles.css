@@ -158,7 +158,8 @@ input:focus-visible {
 
 .renderProjects + .editing-project { margin-top: var(--space-3); }
 
-.modal[hidden],
+/* Honor the hidden attribute globally to avoid panels stacking */
+[hidden],
 .hidden { display: none !important; }
 
 /* MODAL */
@@ -260,95 +261,79 @@ input[type="text"]:focus {
 }
 .for-button .ok:active { transform: translateY(1px); }
 
-/* PROJECTS LIST */
-.renderProjects { display: grid; gap: var(--space-2); }
-
-.renderProjects .eachProject {
+/* PROJECTS LIST (Beginner-friendly overrides) */
+.renderProjects, .archivedProjects {
   display: grid;
-  grid-template-columns: 2.25rem 1fr auto;
-  align-items: center;
-  gap: var(--space-2);
-  padding: 0.8rem 1rem;
-  border: var(--stroke) solid var(--border);
-  border-radius: var(--radius);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-  transition: transform 80ms ease, border-color 160ms ease, background 160ms ease, box-shadow 200ms ease;
-  will-change: transform;
+  gap: 12px; /* space between items */
 }
-.renderProjects .eachProject:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: #4b5563;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.25);
-}
-.renderProjects .eachProject:active { transform: translateY(1px); }
 
-.renderProjects .eachProject > span {
-  width: 2.25rem;
-  height: 2.25rem;
+.renderProjects .eachProject, .archivedProjects .eachProject {
+  display: grid;
+  grid-template-columns: 2rem 1fr auto; /* number | title | actions */
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.renderProjects .eachProject:hover, .archivedProjects .eachProject:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: #4b5563;
+}
+
+.renderProjects .eachProject > span, .archivedProjects .eachProject > span {
+  width: 2rem;
+  height: 2rem;
   display: grid;
   place-items: center;
   border-radius: 8px;
   background: var(--muted);
   color: var(--text);
-  font-weight: 700;
-  letter-spacing: 0.3px;
+  font-weight: 600;
 }
 
-.renderProjects .eachProject > p {
+.renderProjects .eachProject > p, .archivedProjects .eachProject > p {
   margin: 0;
   font-size: 1rem;
-  line-height: 1.5;
 }
 
-.renderProjects .eachProject > div {
+.renderProjects .eachProject > div, .archivedProjects .eachProject > div {
   display: flex;
-  gap: 0.45rem;
+  gap: 8px;
 }
 
-/* Action buttons */
-.renderProjects .eachProject button {
+.renderProjects .eachProject button, .archivedProjects .eachProject button {
   appearance: none;
-  border-radius: 9px;
-  padding: 0.48rem 0.75rem;
-  border: var(--stroke) solid var(--border);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.02);
   color: var(--text);
   cursor: pointer;
-  transition: transform 80ms ease, border-color 160ms ease, background 160ms ease, box-shadow 200ms ease;
-  will-change: transform;
 }
-.renderProjects .eachProject button:hover { background: rgba(255, 255, 255, 0.07); }
-.renderProjects .eachProject button:active { transform: translateY(1px); }
-
-/* Variants */
-.renderProjects .eachProject .edit {
-  border-color: color-mix(in srgb, var(--accent), black 10%);
-}
-.renderProjects .eachProject .edit:hover {
-  background: color-mix(in srgb, var(--accent), black 6%);
-  color: var(--accent-contrast);
-  box-shadow: 0 6px 14px rgba(79,70,229,0.35);
+.renderProjects .eachProject button:hover, .archivedProjects .eachProject button:hover {
+  background: rgba(255, 255, 255, 0.06);
 }
 
-.renderProjects .eachProject .delete {
-  border-color: color-mix(in srgb, var(--danger), black 18%);
-  color: color-mix(in srgb, var(--danger), white 22%);
-}
-.renderProjects .eachProject .delete:hover {
-  background: color-mix(in srgb, var(--danger), black 8%);
+/* Button colors */
+.renderProjects .eachProject .edit, .archivedProjects .eachProject .edit {
+  background: var(--accent);
   color: #fff;
-  box-shadow: 0 6px 14px rgba(239,68,68,0.35);
+  border-color: var(--accent);
 }
 
-.renderProjects .eachProject .done {
+.renderProjects .eachProject .delete, .archivedProjects .eachProject .delete {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+}
+
+.renderProjects .eachProject .done, .archivedProjects .eachProject .undo {
   background: var(--success);
   color: #fff;
-  border-color: color-mix(in srgb, var(--success), black 12%);
-  box-shadow: 0 6px 14px rgba(16,185,129,0.35);
-}
-.renderProjects .eachProject .done:hover {
-  background: color-mix(in srgb, var(--success), black 6%);
+  border-color: var(--success);
 }
 
 /* RESPONSIVE */
@@ -378,17 +363,17 @@ input[type="text"]:focus {
     text-align: center;
   }
 
-  .renderProjects .eachProject {
+  .renderProjects .eachProject, .archivedProjects .eachProject {
     grid-template-columns: 2rem 1fr;
   }
-  .renderProjects .eachProject > div {
+  .renderProjects .eachProject > div, .archivedProjects .eachProject > div {
     grid-column: 1 / -1;
     justify-content: flex-end;
   }
 }
 
 /* OPTIONAL: nicer empty state */
-.renderProjects:empty::before {
+.renderProjects:empty::before, .archivedProjects:empty::before {
   content: "No projects yet";
   display: block;
   padding: 2.25rem;

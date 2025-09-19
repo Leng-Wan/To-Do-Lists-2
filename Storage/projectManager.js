@@ -1,7 +1,7 @@
 import { dataFactory } from "./dataFactory.js";
 
 let projects = [];
-let archived = []
+let archivedProjects = []
 
 // Add a project given a title string or a full project object
 export function addProject(project_or_Title) {
@@ -36,7 +36,45 @@ export function removeProject(project_id)
 
     const [removed] = projects.splice(idx,1)
     document.dispatchEvent(new CustomEvent("project:removed",{detail:removed}))
+    return true;
 }
+
+//archiving project
+export function archivedProject(project_id)
+{
+    let idx = projects.findIndex(p=>p.id === project_id)
+    if(idx === -1) return false;
+
+    const [projectArchived] = projects.splice(idx,1)
+    archivedProjects.push(projectArchived)
+    document.dispatchEvent(new CustomEvent("project:archived",{detail:projectArchived}))
+    return true;
+}
+
+export function getArchivedProjects()
+{
+    return [...archivedProjects]
+}
+
+export function removeArchivedProject(project_id) {
+  const idx = archivedProjects.findIndex(p => p.id === project_id);
+  if (idx === -1) return false;
+  const [removed] = archivedProjects.splice(idx, 1);
+  document.dispatchEvent(new CustomEvent('archived:removed', { detail: removed }));
+  return true;
+}
+
+
+export function unarchiveProject(project_id) {
+  const idx = archivedProjects.findIndex(p => p.id === project_id);
+  if (idx === -1) return false;
+  const [proj] = archivedProjects.splice(idx, 1);
+  projects.push(proj);
+  document.dispatchEvent(new CustomEvent('project:unarchived', { detail: proj }));
+  return true;
+}
+
+
 
 // Listen for created projects dispatched by the capture module
 document.addEventListener("project:created", (e) => {
