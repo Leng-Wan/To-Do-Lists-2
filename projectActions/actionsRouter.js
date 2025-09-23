@@ -17,10 +17,10 @@ export function wireListActions(containerSelector)
 
   container.addEventListener("click",(e)=>
 {
-    const btn = e.target.closest("button")
+    const btn = e.target.closest("button[data-action]")
     if(!btn) return;
 
-    const action = btn.dataset.action;
+    const action = btn.dataset.action || btn.classList[0] || (btn.textContent || '').toLowerCase();
     const projectEl = btn.closest(".eachProject")
     const projectID = projectEl?.dataset.id;
 
@@ -43,7 +43,7 @@ export function wireListActions(containerSelector)
 
 function handlerDelete(projectID, isArchivedList) {
   if (!projectID) return;
-  if (!confirm("Delete this project?")) return;
+  if (!confirm('Delete this project?')) return;
   return isArchivedList ? removeArchivedProject(projectID) : removeProject(projectID);
 }
 

@@ -14,7 +14,7 @@ function render() {
     items: getProjects(),
     emptyText: "No projects yet",
     actions: [
-      { text: "Edit", className: "edit",action:"edit" },
+      { text: "Info", className: "Info",action:"info" },
       { text: "Delete", className: "delete",action:"delete" },
       { text: "Done", className: "done",action:"done" },
     ],
@@ -36,7 +36,9 @@ export function show()
     document.addEventListener("project:created",render)
     document.addEventListener("project:removed",render)
     document.addEventListener("project:archived",render)
-    document.addEventListener("project:unarchived",render)
+    document.addEventListener('project:unarchived', render);
+    document.addEventListener('project:updated', render);
+
 
     wireListActions(".renderProjects")
 }

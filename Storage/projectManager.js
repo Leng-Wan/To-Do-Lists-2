@@ -74,8 +74,40 @@ export function unarchiveProject(project_id) {
   return true;
 }
 
+//this aims to open edit mode of specific project
+export function getProjectDetail(project_id)
+{
+ const idx = projects.findIndex(p => p.id === project_id)
+ if(idx === -1) return null;
 
+ const project = projects[idx]
+ document.dispatchEvent(new CustomEvent("project:info", {detail:project}))
 
+ return project;
+}
+
+// updating project
+export function updateProject(project_id,changes={})
+{
+  const idx = projects.findIndex(p=>p.id === project_id)
+  if(idx === -1) return null;
+
+  const now = new Date().toISOString();
+
+  const next = {...projects[idx], ...changes, updated_at:now}
+
+  if(typeof changes.title === 'string')
+  {
+    const t = changes.title.trim();
+    if(!t) return projects[idx]
+    next.title = t;
+  }
+
+  if(Array.isArray(changes.tasks)) next.tasks = changes.tasks;
+  projects[idx] = next;
+  document.dispatchEvent(new CustomEvent("project:updated",{detail:next}))
+  return next;
+}
 // Listen for created projects dispatched by the capture module
 document.addEventListener("project:created", (e) => {
   addProject(e.detail);
